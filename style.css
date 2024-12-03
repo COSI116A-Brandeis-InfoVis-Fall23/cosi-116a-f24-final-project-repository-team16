@@ -3,6 +3,13 @@ body {
 	padding: 0 10px;
 	font: 18px/1.5 -apple-system, BlinkMacSystemFont, "avenir next",avenir, "Segoe UI", "lucida grande", "helvetica neue", helvetica, "Fira Sans",roboto, noto, "Droid Sans", cantarell, oxygen, ubuntu, "franklin gothic medium", "century gothic", "Liberation Sans",
 	sans-serif;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    margin: 0; /* Remove default margin */
+    padding: 0;
+    background-color: #f9f9f9
 }
 
 .brush .selection {
@@ -46,6 +53,16 @@ h1, h2, h3 {
   height: 100%;
   border: 1px solid red;
 }
+
+#world-map {
+    width: 100%;
+    max-width: 960px;
+    height: 500px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 
 /* Fork on GitHub ribbon via https://codepo8.github.io/css-fork-on-github-ribbon/# */  
 #forkongithub a{
