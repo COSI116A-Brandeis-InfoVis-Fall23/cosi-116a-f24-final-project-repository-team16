@@ -1,0 +1,6 @@
+Dimension,Code,Description
+Nature,E,Estimated data
+Nature,N,Non-relevant
+Reporting Type,G,Global
+Sex,FEMALE,Female
+Units,PER_100000_LIVE_BIRTHS,"Per 100,000 live births"
