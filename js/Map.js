@@ -1,59 +1,63 @@
-import * as d3 from 'd3';
-import { feature } from 'topojson-client';
+console.log("Worldmap.js is loading");
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Initializing world map...");
+    
+    // Set dimensions
+    const margin = {top: 20, right: 20, bottom: 20, left: 20};
+    const width = 800 - margin.left - margin.right;
+    const height = 400 - margin.top - margin.bottom;
 
-// Dimensions for the SVG
-const width = 960;
-const height = 600;
+    // Create SVG
+    const svg = d3.select("#world-map")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
 
-// Create an SVG element in the map container
-const svg = d3.select("#worldmap")
-    .attr("width", width)
-    .attr("height", height);
+    // Create projection
+    const projection = d3.geoMercator()
+        .scale(120)
+        .translate([width / 2, height / 1.5]);
 
-// Set up the projection and path for the world map
-const projection = d3.geoMercator()
-    .scale(150)
-    .translate([width / 2, height / 2]);
-const path = d3.geoPath().projection(projection);
+    // Create path generator
+    const path = d3.geoPath()
+        .projection(projection);
 
-// Load the world map and data
-d3.json("https://unpkg.com/world-atlas/world/110m.json").then(world => {
-    svg.selectAll("path")
-        .data(feature(world, world.objects.countries).features)
-        .enter().append("path")
-        .attr("d", path)
-        .attr("fill", "#ccc");  // Default fill
-
-    // Load the health data
-    d3.csv("data/SH_STA_MORT.csv").then(data => {
-        // Create a year select dropdown dynamically
-        const years = Array.from(new Set(data.map(d => d.Year))).sort();
-        d3.select("#yearSelect").selectAll("option")
-            .data(years)
+    // Load world map data using local file
+    d3.json("data/world.geojson").then(function(worldData) {
+        svg.selectAll("path")
+            .data(worldData.features)
             .enter()
-            .append("option")
-            .text(d => d)
-            .attr("value", d => d);
-
-        // Update map on year select change
-        d3.select("#yearSelect").on("change", function() {
-            const year = d3.select(this).property("value");
-            updateMapColors(year, data);
-        });
-
-        function updateMapColors(year, data) {
-            const yearData = data.filter(d => d.Year === year);
-            const colorScale = d3.scaleSequential(d3.interpolateReds)
-                .domain(d3.extent(yearData, d => +d.Value));
-
-            svg.selectAll("path")
-                .style("fill", d => {
-                    const countryData = yearData.find(c => c.CountryCode === d.id);
-                    return countryData ? colorScale(+countryData.Value) : "#ccc";
-                });
-        }
-
-        // Initially update the map colors
-        updateMapColors(years[0], data);
+            .append("path")
+            .attr("d", path)
+            .style("fill", "#69b3a2")
+            .style("stroke", "#fff")
+            .style("stroke-width", "0.5")
+            .on("mouseover", function(event, d) {
+                d3.select(this)
+                    .style("fill", "#ffcc00")
+                    .style("cursor", "pointer");
+            })
+            .on("mouseout", function(event, d) {
+                d3.select(this)
+                    .style("fill", "#69b3a2");
+            })
+            .on("click", function(event, d) {
+                const countryName = d.properties.name;
+                const select = document.getElementById('countryFilter');
+                if (select && select.querySelector(`option[value="${countryName}"]`)) {
+                    select.value = countryName;
+                    select.dispatchEvent(new Event('change'));
+                }
+            });
+    }).catch(function(error) {
+        console.error("Error loading map:", error);
+        d3.select("#world-map")
+            .append("div")
+            .style("color", "red")
+            .style("padding", "20px")
+            .text("Error loading map data");
     });
 });
+

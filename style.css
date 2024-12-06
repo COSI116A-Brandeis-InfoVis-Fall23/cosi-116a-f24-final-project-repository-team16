@@ -50,7 +50,8 @@ h1, h2, h3 {
 /* But your visualization should be full-width and full-height */
 .vis-holder {
     width: 100%;
-    margin: 20px 0;
+    max-width: 1000px;
+    margin: 0 auto;
     padding: 20px;
     background: white;
     border-radius: 8px;
@@ -59,14 +60,45 @@ h1, h2, h3 {
 
 #world-map {
     width: 100%;
-    max-width: 960px;
-    height: 500px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin: 0 auto;
+    height: 400px;
+    background: white;
+    margin-bottom: 20px;
 }
 
+#world-map svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.country {
+    fill: #69b3a2;
+    stroke: #fff;
+    stroke-width: 0.5;
+}
+
+.country:hover {
+    fill: #ffcc00;
+    cursor: pointer;
+}
+
+.country-selector {
+    margin: 0 0 20px 0;
+}
+
+#timeline, #barchart {
+    width: 100%;
+    height: 300px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    padding: 20px;
+}
 
 /* Fork on GitHub ribbon via https://codepo8.github.io/css-fork-on-github-ribbon/# */  
 #forkongithub a{
@@ -134,4 +166,13 @@ h1, h2, h3 {
     .vis-holder {
         padding: 10px;
     }
+}
+
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: #666;
 }

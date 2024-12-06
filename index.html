@@ -55,8 +55,7 @@
   <!-- Your visualization here -->
   <div class="vis-holder">
     <div id="world-map"></div>
-    <div style="margin: 20px 0;">
-      <label for="countryFilter">Select Country: </label>
+    <div class="country-selector">
     </div>
     
     <div id="timeline"></div>
@@ -122,10 +121,10 @@
   </div>
   
   <!-- Scripts at the end avoid need for dealing with async, defer, or onload event handlers -->
-  <script src="lib/d3.v4/d3.v4.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
-  <script src="js/worldmap.js"></script>
-  <script src="js/visualization.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://d3js.org/topojson.v2.min.js"></script>
+  <script type="text/javascript" src="js/Map.js"></script>
+  <script type="text/javascript" src="js/visualization.js"></script>
   
 
   
